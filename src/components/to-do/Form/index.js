@@ -25,18 +25,17 @@ class Form extends React.Component {
         <h3>Add Task To List</h3>
         <form onSubmit={this.handleSubmit}>
           <label>
-            <span>Task:</span>
             <input
               name='text'
-              placeholder='Add To Do List Item'
+              placeholder='Task'
               onChange={this.handleInputChange}
             />
           </label>
           <br></br>
           <label>
-            <span>Difficulty:</span>
+            <div>Difficulty:</div>
             <input
-              defaultValue='1'
+              defaultValue='3'
               type='range'
               min='1'
               max='5'
@@ -46,15 +45,14 @@ class Form extends React.Component {
           </label>
           <br></br>
           <label>
-            <span>Assigned:</span>
             <input
               type='text'
               name='assignee'
-              placeholder='Assigned To'
+              placeholder='Assign (Name)'
               onChange={this.handleInputChange}
             />
           </label>
-          <button>Add Item</button>
+          <button>Add</button>
         </form>
       </>
     );
