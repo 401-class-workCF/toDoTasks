@@ -1,19 +1,18 @@
 import React from 'react';
 
-import Header from './components/to-do/Header/index';
-import Form from './components/to-do/Form';
+// import Header from './components/to-do/Header/index';
+// import Form from './components/to-do/Form';
+import Index from './components/to-do/index';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className='App'>
-      <Header />
-      <Form />
+    <div>
+      <Index />
     </div>
   );
 }
 
 export default App;
-
