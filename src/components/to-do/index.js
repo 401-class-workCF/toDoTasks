@@ -10,33 +10,21 @@ class ToDo extends React.Component {
     };
   }
 
-  addItem = (item) => {
-    item._id = Math.random();
-    item.complete = false;
-    this.setState({ list: [...this.state.list, item] });
-  };
-
-  toggleComplete = (id) => {
-    let item = this.state.list.filter((i) => i._id === id)[0] || {};
-
-    if (item._id) {
-      item.complete = !item.complete;
-      let list = this.state.list.map((listItem) =>
-        listItem._id === item._id ? item : listItem
-      );
-      this.setState({ list });
-    }
+  addTask = (task) => {
+    task._id = Math.random();
+    task.complete = false;
+    this.setState({ list: [...this.state.list, task] });
   };
 
   componentDidMount() {
     let list = [
-      {
-        _id: 1,
-        complete: false,
-        text: 'Clean',
-        difficulty: 1,
-        assignee: 'Rea',
-      },
+        {
+          _id: 1,
+          complete: false,
+          text: 'Clean',
+          difficulty: 1,
+          assignee: 'Rea',
+        },
     ];
 
     this.setState({ list });
@@ -47,21 +35,17 @@ class ToDo extends React.Component {
       <>
         <header>
           <h2>
-            There are {this.state.list.filter((item) => !item.complete).length}{' '}
-            Items To Complete
+            {this.state.list.filter((task) => !task.complete).length} Tasks
           </h2>
         </header>
 
         <section className='todo'>
           <div>
-            <Form handleSubmit={this.addItem} />
+            <Form handleSubmit={this.addTask} />
           </div>
 
           <div>
-            <List
-              list={this.state.list}
-              handleComplete={this.toggleComplete}
-            />
+            <List list={this.state.list} />
           </div>
         </section>
       </>
@@ -70,4 +54,3 @@ class ToDo extends React.Component {
 }
 
 export default ToDo;
-
