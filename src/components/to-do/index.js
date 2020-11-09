@@ -1,56 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from './Form/index';
 import List from './List/index';
 
-class ToDo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      list: [],
-    };
-  }
+const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
 
-  addTask = (task) => {
-    task._id = Math.random();
-    task.complete = false;
-    this.setState({ list: [...this.state.list, task] });
+function App() {
+  const [list, setList] = useState([]);
+
+  const add = (item) => {
+    item.due = new Date();
+    fetch(todoAPI, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(item),
+    })
+      .then((response) => response.json())
+      .then((savedItem) => {
+        setList([...list, savedItem]);
+      })
+      .catch(console.error);
   };
 
-  componentDidMount() {
-    let list = [
-        {
-          _id: 1,
-          complete: false,
-          text: 'Clean',
-          difficulty: 1,
-          assignee: 'Rea',
-        },
-    ];
+  const get = () => {
+    fetch(todoAPI, {
+      method: 'get',
+      mode: 'cors',
+    })
+      .then((tasks) => tasks.json())
+      .then((tasks) => setList(tasks.results))
+      .catch(console.error);
+  };
 
-    this.setState({ list });
-  }
+  useEffect(get, []);
 
-  render() {
-    return (
-      <>
-        <header>
-          <h2>
-            {this.state.list.filter((task) => !task.complete).length} Tasks
-          </h2>
-        </header>
-
-        <section className='todo'>
-          <div>
-            <Form handleSubmit={this.addTask} />
-          </div>
-
-          <div>
-            <List list={this.state.list} />
-          </div>
-        </section>
-      </>
-    );
-  }
+  return (
+    <>
+      <header>
+        <h1>
+          {list.filter((task) => !task.complete).length} Tasks
+        </h1>
+      </header>
+      <section>
+        <div className="Form">
+          <Form handleSubmit={add} />
+        </div>
+        <div>
+          <List list={list} />
+        </div>
+      </section>
+    </>
+  );
 }
 
-export default ToDo;
+export default App;
