@@ -52,6 +52,7 @@ class Form extends React.Component {
               onChange={this.handleInputChange}
             />
           </label>
+          
           <button>Add</button>
         </form>
       </>
